@@ -1,0 +1,448 @@
+{
+ "porServicio": {
+  "AOM Colaboración": {
+   "recId": "CCC980ED4157482C8290DE495E63407D",
+   "plantilla": "1. Colaboración"
+  },
+  "AOM Networking": {
+   "recId": "4052340B4042405C8A922C4D2FF8B25A",
+   "plantilla": "AOM Networking"
+  },
+  "AOM Respaldos": {
+   "recId": "3620C5FA1F9C40129733FC247F50BC05",
+   "plantilla": "AOM Respaldos"
+  },
+  "AOM Seguridad": {
+   "recId": "0374F71CC66942F28361C68D7B255DCC",
+   "plantilla": "AOM Seguridad"
+  },
+  "AOM Sistema Operativo": {
+   "recId": "F5AEE34A0E8D473686569FC132C50525",
+   "plantilla": "AOM Sistema Operativo"
+  },
+  "Accesos Multicliente": {
+   "recId": "8BC01165F324432A8EEED26DFC17C303",
+   "plantilla": "Accesos Multicliente"
+  },
+  "Administración de aplicaciones": {
+   "recId": "8AEDE6C7274D4ECF8BFEA1F088ACA68F",
+   "plantilla": "Avance de estado de pedido JANIS"
+  },
+  "Datacenter": {
+   "recId": "68A48E1C0959443D935FA195EE0CE5DF",
+   "plantilla": "Datacenter"
+  },
+  "Estaciones de Trabajo": {
+   "recId": "487EF6CA8C454DF38B559505EE65EC4F",
+   "plantilla": "8. Soporte Técnico (Mesa de Servicio)"
+  },
+  "Gestión Accesos": {
+   "recId": "687A91DEF557405AA5A936C9DCBE1E29",
+   "plantilla": "Activación  VPN"
+  },
+  "Impresión": {
+   "recId": "5E66AC83718043F89EB3B90AADD594F2",
+   "plantilla": "Impresión"
+  },
+  "Ivanti": {
+   "recId": "FADE74E07A7A491B949321D6B317CE02",
+   "plantilla": "Administración de Ivanti"
+  },
+  "Monitoreo": {
+   "recId": "1F37D0423BFD4EF6904E2212B4EE4B94",
+   "plantilla": "Monitoreo"
+  },
+  "Operaciones de TI SIMAN": {
+   "recId": "7D3F1E8A1324417EB086FBC632141121",
+   "plantilla": "Operaciones de TI SIMAN"
+  },
+  "Sistemas Franquicias SIMAN": {
+   "recId": "5B181B6A57AB4F01B9E2BA4A91A5A2E8",
+   "plantilla": "Sistemas Franquicias SIMAN"
+  },
+  "Soporte Técnico SIMAN": {
+   "recId": "D6403E554EE64A16B2FC1E9F889B148C",
+   "plantilla": "Falla In Store"
+  },
+  "Soporte a Plataforma SIMAN": {
+   "recId": "DCC78ED57D654D7D90A320A5AA61BC8E",
+   "plantilla": "Parchado de Agentes de Oracle"
+  },
+  "Telefonía": {
+   "recId": "81EBD6CDDDA74DEC8A2708A2F6765283",
+   "plantilla": "Falla con el equipo de Telefonia"
+  }
+ },
+ "plantillas": [
+  {
+   "recId": "6D4BF8312C264C8B8BD8C22EA912E334",
+   "nombre": "AOM Base de Datos",
+   "servicio": ""
+  },
+  {
+   "recId": "36D3645756FE41329F8BE04BAE947C0F",
+   "nombre": "AOM Hardware",
+   "servicio": ""
+  },
+  {
+   "recId": "AE0BC1B999894BA7943C3A951D2020FF",
+   "nombre": "AOM Virtualización",
+   "servicio": ""
+  },
+  {
+   "recId": "6656DD911DCE4D75AED8B4D0ED45821D",
+   "nombre": "Antivirus Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "957DB15FC4AC495AB900A1B6BC6DA417",
+   "nombre": "Arquitectura",
+   "servicio": ""
+  },
+  {
+   "recId": "B74113D1F3CF4461B6CC889E41BA1617",
+   "nombre": "Business Analytics SIMAN",
+   "servicio": ""
+  },
+  {
+   "recId": "55382DDFBC6D445CB1A82D28D3C0E8E0",
+   "nombre": "Bóveda de Cintas",
+   "servicio": ""
+  },
+  {
+   "recId": "860870C26C574B94AE0E81825B135DA0",
+   "nombre": "Cloud",
+   "servicio": ""
+  },
+  {
+   "recId": "714C01C0043744518E37920A6E9DD499",
+   "nombre": "Consulta Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "2F43EDBE8A844AA6B818A094BE134C44",
+   "nombre": "Correo Electrónico Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "2D2401680EF64100A46441BBE9FEA2ED",
+   "nombre": "Equipo usuario final Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "1FAC2AB252D540D28E6D107616D7E189",
+   "nombre": "Facilities DC",
+   "servicio": ""
+  },
+  {
+   "recId": "C8BF0F38E96D4AF9A133385E93B43EF7",
+   "nombre": "Impresoras Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "615BC28E030344B8BC64AFF416C967A8",
+   "nombre": "Manos Remotas",
+   "servicio": ""
+  },
+  {
+   "recId": "961EAA5895E3473287406D58819681C7",
+   "nombre": "Mejora Continua",
+   "servicio": ""
+  },
+  {
+   "recId": "9DE6A0B8408045CE8DEA3B1710B6A282",
+   "nombre": "Nuevo Incidente",
+   "servicio": ""
+  },
+  {
+   "recId": "18D7079F578C405D941C34E81DF8E9E0",
+   "nombre": "Redes Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "A8BEB46CE001489D979546E4E6392309",
+   "nombre": "Seguridad",
+   "servicio": ""
+  },
+  {
+   "recId": "EE8C513E21914179847B1EB958FE221D",
+   "nombre": "Seguridad Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "044B7A86409B48FDBDE965ED30F7E47C",
+   "nombre": "Seguridad SIMAN",
+   "servicio": ""
+  },
+  {
+   "recId": "EF210422CEB3459A8374BDDEA819383E",
+   "nombre": "Servidor Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "FC8CB354C19F4660A05E3E56BAA9B956",
+   "nombre": "Telefonía Multicliente",
+   "servicio": ""
+  },
+  {
+   "recId": "CCC980ED4157482C8290DE495E63407D",
+   "nombre": "1. Colaboración",
+   "servicio": "AOM Colaboración"
+  },
+  {
+   "recId": "9BF8F4FE1A5446E1B3E2C88A757832ED",
+   "nombre": "7. Cuenta de AD o inicio de sesión de Windows",
+   "servicio": "AOM Colaboración"
+  },
+  {
+   "recId": "4052340B4042405C8A922C4D2FF8B25A",
+   "nombre": "AOM Networking",
+   "servicio": "AOM Networking"
+  },
+  {
+   "recId": "3620C5FA1F9C40129733FC247F50BC05",
+   "nombre": "AOM Respaldos",
+   "servicio": "AOM Respaldos"
+  },
+  {
+   "recId": "0374F71CC66942F28361C68D7B255DCC",
+   "nombre": "AOM Seguridad",
+   "servicio": "AOM Seguridad"
+  },
+  {
+   "recId": "C53024AA8EFA4999BB21887CCF60F7F0",
+   "nombre": "5. SIMAN PRD y SIMAN RETAIL",
+   "servicio": "AOM Sistema Operativo"
+  },
+  {
+   "recId": "F5AEE34A0E8D473686569FC132C50525",
+   "nombre": "AOM Sistema Operativo",
+   "servicio": "AOM Sistema Operativo"
+  },
+  {
+   "recId": "8BC01165F324432A8EEED26DFC17C303",
+   "nombre": "Accesos Multicliente",
+   "servicio": "Accesos Multicliente"
+  },
+  {
+   "recId": "B59BD4ACDC6C433CBB6B54386CDD3602",
+   "nombre": "3. Aplicaciones",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "8CCE7E2ABBEC489DA235CDEB838FCA31",
+   "nombre": "6. Portal de colaborador",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "8AEDE6C7274D4ECF8BFEA1F088ACA68F",
+   "nombre": "Avance de estado de pedido JANIS",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "745A110704A74EDC98C617EC6D318FF5",
+   "nombre": "Carga de conteo de inventario",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "9BAED0AE4C934262BB8207B866659C1D",
+   "nombre": "Configuraciones de Cuotas",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "280C25366E014BE084242A0DAD0232E4",
+   "nombre": "Diferencias Resa vs POSDB",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "E3B8DF7C56DA4259B238C2AC6B1C2046",
+   "nombre": "Equipos POS bloqueados",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "40FFC7C573E5465EADA5AC62C8D95BDE",
+   "nombre": "Error en  Hop scanning",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "5CEE6CD2C05B4CDEBE4D740A5237A104",
+   "nombre": "Fallas de Aplicaciones I",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "16AE73BF6929486E8ECCDDE24BE32D91",
+   "nombre": "Generación de Estado de Cuenta",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "B1F7F3CA6CD245F899B0AA399052D8F3",
+   "nombre": "Liberación de usuarios POS",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "2EA2EFAA58874047ABF39931C3EC9A97",
+   "nombre": "Problemas para indexar en Hop Scanning",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "24BBC21D071C4C86B99076F05DCAF190",
+   "nombre": "Solicitudes In Store",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "32B769A35AC442AAA93E060B614CCB32",
+   "nombre": "Transación no finalizada Oracle Retail",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "46983EFB9C8B43F0A2AD26980D241800",
+   "nombre": "Transación no finalizo correctamente POS",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "8F0EE66332BA4C16BB74D278F1FAEF11",
+   "nombre": "Validación salud de aplicaciones",
+   "servicio": "Administración de aplicaciones"
+  },
+  {
+   "recId": "68A48E1C0959443D935FA195EE0CE5DF",
+   "nombre": "Datacenter",
+   "servicio": "Datacenter"
+  },
+  {
+   "recId": "487EF6CA8C454DF38B559505EE65EC4F",
+   "nombre": "8. Soporte Técnico (Mesa de Servicio)",
+   "servicio": "Estaciones de Trabajo"
+  },
+  {
+   "recId": "687A91DEF557405AA5A936C9DCBE1E29",
+   "nombre": "Activación  VPN",
+   "servicio": "Gestión Accesos"
+  },
+  {
+   "recId": "B6416669B88C43569C7BAC92BDD2200E",
+   "nombre": "Alta Masiva de Aplicaciones",
+   "servicio": "Gestión Accesos"
+  },
+  {
+   "recId": "30F0FADDE6C84DE88E59FF2EDE4E44BC",
+   "nombre": "Alta de Aplicaciones",
+   "servicio": "Gestión Accesos"
+  },
+  {
+   "recId": "8ABD3CA639024B0DA6ADFBE9CFA313A1",
+   "nombre": "Alta de Aplicaciones Masiva",
+   "servicio": "Gestión Accesos"
+  },
+  {
+   "recId": "17724BB84E18457080E57E4EEB2AB726",
+   "nombre": "Asignacion de Rol a Usuario",
+   "servicio": "Gestión Accesos"
+  },
+  {
+   "recId": "EDA972B5703D49A3B52F19D1EAEB2243",
+   "nombre": "Baja  de Aplicaciones Masiva",
+   "servicio": "Gestión Accesos"
+  },
+  {
+   "recId": "5E66AC83718043F89EB3B90AADD594F2",
+   "nombre": "Impresión",
+   "servicio": "Impresión"
+  },
+  {
+   "recId": "CB6D2D44E2334E87909B7542C0931A7D",
+   "nombre": "No pueden imprimir",
+   "servicio": "Impresión"
+  },
+  {
+   "recId": "FADE74E07A7A491B949321D6B317CE02",
+   "nombre": "Administración de Ivanti",
+   "servicio": "Ivanti"
+  },
+  {
+   "recId": "08FB59C62B9C4BCCAF36B763BA3F2F2A",
+   "nombre": "Catalogo y Ofertas de Servicio",
+   "servicio": "Ivanti"
+  },
+  {
+   "recId": "CD8796BE0CCD441B8A1F6AF3FB159C43",
+   "nombre": "Gestión de usuarios y roles",
+   "servicio": "Ivanti"
+  },
+  {
+   "recId": "FAB89B129C95499DA302D387E015ECFF",
+   "nombre": "Notificaciones",
+   "servicio": "Ivanti"
+  },
+  {
+   "recId": "11DDC539343B4B80B289C2F77505A893",
+   "nombre": "Reportes - Dashboards",
+   "servicio": "Ivanti"
+  },
+  {
+   "recId": "1F37D0423BFD4EF6904E2212B4EE4B94",
+   "nombre": "Monitoreo",
+   "servicio": "Monitoreo"
+  },
+  {
+   "recId": "C4E58DC32DDA42E8B9CFFD8A7BAB7147",
+   "nombre": "Cuadratura y cierres aplicaciones",
+   "servicio": "Operaciones de TI SIMAN"
+  },
+  {
+   "recId": "7D3F1E8A1324417EB086FBC632141121",
+   "nombre": "Operaciones de TI SIMAN",
+   "servicio": "Operaciones de TI SIMAN"
+  },
+  {
+   "recId": "7DC841975A864C56BD371A01C6972B4E",
+   "nombre": "Correción de Diferencia de reporte",
+   "servicio": "Sistemas Franquicias SIMAN"
+  },
+  {
+   "recId": "5B181B6A57AB4F01B9E2BA4A91A5A2E8",
+   "nombre": "Sistemas Franquicias SIMAN",
+   "servicio": "Sistemas Franquicias SIMAN"
+  },
+  {
+   "recId": "787C6E45DCFE45DEAC8EF3DD34086148",
+   "nombre": "2. Soporte Técnico (En Sitio)",
+   "servicio": "Soporte Técnico SIMAN"
+  },
+  {
+   "recId": "D6403E554EE64A16B2FC1E9F889B148C",
+   "nombre": "Falla In Store",
+   "servicio": "Soporte Técnico SIMAN"
+  },
+  {
+   "recId": "976D0DB70FC04B95A506C794DF32307C",
+   "nombre": "Falla con el equipo de computo",
+   "servicio": "Soporte Técnico SIMAN"
+  },
+  {
+   "recId": "C3BB4EB4C1734A69944D1CFFF533F6F8",
+   "nombre": "Toma de iventario",
+   "servicio": "Soporte Técnico SIMAN"
+  },
+  {
+   "recId": "DCC78ED57D654D7D90A320A5AA61BC8E",
+   "nombre": "Parchado de Agentes de Oracle",
+   "servicio": "Soporte a Plataforma SIMAN"
+  },
+  {
+   "recId": "C26852ED00D545788FC66CDEF856B599",
+   "nombre": "Plataforma SIMAN",
+   "servicio": "Soporte a Plataforma SIMAN"
+  },
+  {
+   "recId": "D04DE503B4A744C0971ACC3999F6A19F",
+   "nombre": "4. Telefonía",
+   "servicio": "Telefonía"
+  },
+  {
+   "recId": "81EBD6CDDDA74DEC8A2708A2F6765283",
+   "nombre": "Falla con el equipo de Telefonia",
+   "servicio": "Telefonía"
+  }
+ ]
+}

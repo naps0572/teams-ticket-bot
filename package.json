@@ -1,0 +1,26 @@
+{
+  "name": "teams-ticket-bot",
+  "version": "0.1.0",
+  "description": "Chatbot de Teams que crea tickets en un ITSM usando modelos de OpenRouter",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "nodemon -w \"./src/**\" -e ts --exec \"node -r ts-node/register -r dotenv/config ./src/index.ts\"",
+    "build": "tsc && node -e \"const fs=require('fs');['categorizacion.json','categorizacion.tree.json','sr_plantillas.json'].forEach(f=>fs.copyFileSync('src/'+f,'dist/'+f))\"",
+    "start": "node -r dotenv/config ./dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@microsoft/teams.api": "2.0.12",
+    "@microsoft/teams.apps": "2.0.12",
+    "@microsoft/teams.cards": "2.0.12",
+    "@microsoft/teams.common": "2.0.12",
+    "@microsoft/teams.dev": "2.0.12"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
