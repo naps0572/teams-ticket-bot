@@ -4,6 +4,7 @@ import { ConsoleLogger } from '@microsoft/teams.common';
 import { DevtoolsPlugin } from '@microsoft/teams.dev';
 
 import { buildTicketCard } from './cards';
+import { buildConfirmationSummary, isExplicitConfirmation } from './confirmation';
 import * as store from './conversation';
 import { createTicket } from './itsm';
 import { runTicketAssistant } from './openrouter';
@@ -34,56 +35,72 @@ app.on('message', async ({ activity, send, log }) => {
     return;
   }
 
-  // Identidad del solicitante (viene de Teams).
-  const requester: Requester = {
-    name: activity.from?.name,
-    aadObjectId: activity.from?.aadObjectId,
-    // El correo suele venir de Graph; aquí lo dejamos abierto para enriquecer
-    // con `api.user.*` o Graph si lo necesitas.
-  };
+  await store.withLock(conversationId, async () => {
+    // Identidad del solicitante (viene de Teams).
+    const requester: Requester = {
+      name: activity.from?.name,
+      aadObjectId: activity.from?.aadObjectId,
+      // El correo suele venir de Graph; aquí lo dejamos abierto para enriquecer
+      // con `api.user.*` o Graph si lo necesitas.
+    };
 
-  const history = store.append(conversationId, { role: 'user', content: text });
+    const pendingTicket = store.getPendingTicket(conversationId);
+    if (pendingTicket && isExplicitConfirmation(text)) {
+      // Consumimos la confirmación antes del POST. El lock impide que otra
+      // confirmación de la misma conversación cree un duplicado.
+      store.clearPendingTicket(conversationId);
+      await send({ type: 'typing' });
+      try {
+        const created = await createTicket(pendingTicket, requester);
+        const card = buildTicketCard(created, pendingTicket, requester);
+        const tipoLabel = created.tipo === 'solicitud' ? 'Tu solicitud' : 'Tu incidente';
+        await send(
+          new MessageActivity(`${tipoLabel} ${created.id} fue creado.`).addCard('adaptive', card),
+        );
+        store.reset(conversationId);
+      } catch (err) {
+        // Conservamos el borrador para que el usuario pueda reintentar.
+        store.setPendingTicket(conversationId, pendingTicket);
+        log.error(err);
+        await send(
+          'Confirmaste el borrador, pero no pude crear el ticket en el sistema. ' +
+            'Responde “Confirmo” para reintentar o “Cancelar” para descartarlo.',
+        );
+      }
+      return;
+    }
 
-  // Indicador de "escribiendo..." mientras consultamos al modelo.
-  await send({ type: 'typing' });
+    // Si había un borrador y la respuesta no fue una confirmación inequívoca,
+    // se interpreta como una corrección y se vuelve a consultar al agente.
+    if (pendingTicket) store.clearPendingTicket(conversationId);
 
-  let result;
-  try {
-    result = await runTicketAssistant(history);
-  } catch (err) {
-    log.error(err);
-    await send(
-      'Uy, tuve un problema al procesar tu mensaje. Inténtalo de nuevo en un momento.',
-    );
-    return;
-  }
+    const history = store.append(conversationId, { role: 'user', content: text });
+    await send({ type: 'typing' });
 
-  // Guardamos la respuesta del asistente en el historial.
-  store.append(conversationId, { role: 'assistant', content: result.respuesta });
+    let result;
+    try {
+      result = await runTicketAssistant(history);
+    } catch (err) {
+      log.error(err);
+      await send(
+        'Uy, tuve un problema al procesar tu mensaje. Inténtalo de nuevo en un momento.',
+      );
+      return;
+    }
 
-  // Todavía falta información: seguimos conversando.
-  if (!result.listo || !result.ticket) {
-    await send(result.respuesta);
-    return;
-  }
+    if (!result.listo || !result.ticket) {
+      store.append(conversationId, { role: 'assistant', content: result.respuesta });
+      await send(result.respuesta);
+      return;
+    }
 
-  // Ya hay datos suficientes: creamos el ticket en el ITSM.
-  try {
-    const created = await createTicket(result.ticket, requester);
-    const card = buildTicketCard(created, result.ticket, requester);
-    const tipoLabel = created.tipo === 'solicitud' ? 'Tu solicitud' : 'Tu incidente';
-    await send(
-      new MessageActivity(`${tipoLabel} ${created.id} fue creado.`).addCard('adaptive', card),
-    );
-    // Cerramos la conversación para el siguiente ticket.
-    store.reset(conversationId);
-  } catch (err) {
-    log.error(err);
-    await send(
-      'Tengo todos los datos, pero no pude crear el ticket en el sistema. ' +
-        'Vuelve a intentarlo o avisa a soporte si el problema persiste.',
-    );
-  }
+    // Un borrador completo nunca se crea en este mismo turno. Primero se
+    // guarda y se muestra un resumen controlado por el backend.
+    const summary = buildConfirmationSummary(result.ticket);
+    store.setPendingTicket(conversationId, result.ticket);
+    store.append(conversationId, { role: 'assistant', content: summary });
+    await send(summary);
+  });
 });
 
 app

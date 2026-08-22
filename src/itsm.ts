@@ -68,12 +68,28 @@ export async function createTicket(
 
   const data = await ivantiPost(root, apiKey, objectType, body);
 
+  const recId = asString(data.RecId);
   const id =
     asString(data.IncidentNumber) ??
     asString(data.ServiceReqNumber) ??
-    asString(data.RecId) ??
+    recId ??
     'desconocido';
-  const url = buildTicketUrl(root, objectType, asString(data.RecId));
+  const url = buildTicketUrl(root, objectType, recId, id);
+
+  // Algunas plantillas de SR reemplazan campos durante el POST. Reaplicamos
+  // resumen y descripción una vez que Ivanti ya creó e inicializó el registro.
+  // Si falla, no lanzamos error: el SR ya existe y reintentar podría duplicarlo.
+  if (objectType === 'servicereqs' && recId) {
+    try {
+      await ivantiPatch(root, apiKey, objectType, recId, serviceRequestContent(ticket));
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[itsm] SR ${id} fue creado, pero no se pudieron reafirmar resumen/descripción:`,
+        err,
+      );
+    }
+  }
 
   return { id, url, tipo };
 }
@@ -98,6 +114,31 @@ async function ivantiPost(
     throw new Error(`Ivanti respondió ${res.status}: ${detail}`);
   }
   return (await res.json()) as Record<string, unknown>;
+}
+
+/** PATCH autenticado a un registro ya creado. */
+async function ivantiPatch(
+  root: string,
+  apiKey: string,
+  objectType: IvantiObject,
+  recId: string,
+  body: Record<string, unknown>,
+): Promise<void> {
+  const res = await fetch(
+    `${root}/api/odata/businessobject/${objectType}('${encodeURIComponent(recId)}')`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `rest_api_key=${apiKey}`,
+      },
+      body: JSON.stringify(body),
+    },
+  );
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw new Error(`Ivanti rechazó la actualización del SR (${res.status}): ${detail}`);
+  }
 }
 
 /**
@@ -156,7 +197,7 @@ function buildSolicitud(ticket: DraftTicket, profileLink?: string): Record<strin
 
   const body: Record<string, unknown> = {
     Subject: ticket.asunto,
-    Symptom: buildDetalle(ticket),
+    ...serviceRequestContent(ticket),
     Source: 'Self Service',
     Service: servicio,
     SvcReqTmplLink_RecID: template,
@@ -165,6 +206,19 @@ function buildSolicitud(ticket: DraftTicket, profileLink?: string): Record<strin
   };
   if (profileLink) body.ProfileLink = profileLink;
   return body;
+}
+
+/**
+ * Campos que alimentan el resumen y la descripción visibles del SR.
+ * Los nombres se pueden adaptar si otro ambiente de Ivanti usa campos propios.
+ */
+export function serviceRequestContent(ticket: DraftTicket): Record<string, string> {
+  const summaryField = process.env.ITSM_SR_SUMMARY_FIELD || 'AA_Resumen';
+  const descriptionField = process.env.ITSM_SR_DESCRIPTION_FIELD || 'Symptom';
+  return {
+    [summaryField]: ticket.asunto,
+    [descriptionField]: buildDetalle(ticket),
+  };
 }
 
 /** Equipo (cola) al que se asignan todos los tickets. */
@@ -192,14 +246,31 @@ function buildDetalle(ticket: DraftTicket): string {
   return meta.length ? `${meta.join(' | ')}\n\n${ticket.descripcion}` : ticket.descripcion;
 }
 
-/** Enlace de mejor esfuerzo al registro REST en Ivanti (si hay RecId). */
-function buildTicketUrl(
+/**
+ * Enlace a la interfaz Self Service de Ivanti, no al endpoint OData.
+ * ITSM_TICKET_URL_TEMPLATE permite adaptar SSO o una UI personalizada con:
+ * {baseUrl}, {recId}, {id} y {type}.
+ */
+export function buildTicketUrl(
   root: string,
   objectType: IvantiObject,
   recId?: string,
+  id?: string,
 ): string | undefined {
   if (!recId) return undefined;
-  return `${root}/api/odata/businessobject/${objectType}('${recId}')`;
+  const type = objectType === 'servicereqs' ? 'ServiceReq' : 'Incident';
+  const template = process.env.ITSM_TICKET_URL_TEMPLATE;
+
+  if (template) {
+    return template
+      .replaceAll('{baseUrl}', root)
+      .replaceAll('{recId}', encodeURIComponent(recId))
+      .replaceAll('{id}', encodeURIComponent(id ?? recId))
+      .replaceAll('{type}', type);
+  }
+
+  // Formato oficial para abrir el registro en My Items (Self Service UI V2/V3).
+  return `${root}/Modules/SelfService/#myItems/view/${encodeURIComponent(recId)}`;
 }
 
 function asString(value: unknown): string | undefined {

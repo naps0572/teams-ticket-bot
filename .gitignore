@@ -1,0 +1,14 @@
+# Secretos locales
+.env
+.env.*
+!.env.example
+
+# Dependencias y compilados
+node_modules/
+dist/
+
+# Archivos de trabajo y exportaciones locales
+exp *.xlsx
+Categorizacion.xlsx
+API Ivanti.docx
+*.log

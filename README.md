@@ -71,9 +71,20 @@ Luego define en `.env`:
 ```
 ITSM_BASE_URL=https://tu-itsm.ejemplo.com
 ITSM_API_KEY=...
+# Opcional para SSO o una interfaz personalizada:
+# ITSM_TICKET_URL_TEMPLATE={baseUrl}/Modules/SelfService/#myItems/view/{recId}
 ```
 
 En cuanto `ITSM_BASE_URL` esté definido, el bot deja el dry-run y llama a tu API.
+Después de crear el registro, el botón **Ver ticket** abre directamente el
+incidente o solicitud en **My Items** de Ivanti. La plantilla admite
+`{baseUrl}`, `{recId}`, `{id}` y `{type}`.
+
+Para Solicitudes de Servicio, el bot envía el asunto tanto a `Subject` como al
+campo visible `AA_Resumen`, y la descripción a `Symptom`. Después del `POST`
+reafirma estos valores mediante `PATCH`, ya que algunas plantillas de Ivanti
+los reemplazan al inicializar el SR. Si tu ambiente usa campos distintos,
+configura `ITSM_SR_SUMMARY_FIELD` e `ITSM_SR_DESCRIPTION_FIELD`.
 
 ## 3) Llevarlo a Teams
 
