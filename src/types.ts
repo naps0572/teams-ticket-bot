@@ -14,6 +14,8 @@ export interface DraftTicket {
   tipo?: TipoTicket;
   /** Servicio del catálogo (Categorizacion.xlsx). */
   servicio?: string;
+  /** Oferta de servicio de Ivanti; determina el SvcReqTmplLink del SR. */
+  oferta?: string;
   /** Categoría del catálogo, dentro del servicio. */
   categoria?: string;
   /** Subcategoría opcional. */

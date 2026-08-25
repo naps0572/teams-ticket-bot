@@ -18,6 +18,7 @@ export function buildTicketCard(
     new Fact(tipoLabel, created.id),
     new Fact('Asunto', ticket.asunto),
     new Fact('Servicio', ticket.servicio ?? '—'),
+    ...(created.tipo === 'solicitud' ? [new Fact('Oferta', ticket.oferta ?? '—')] : []),
     new Fact('Categoría', ticket.categoria ?? 'general'),
     new Fact('Prioridad', ticket.prioridad ?? 'media'),
     new Fact('Solicitante', requester.name ?? requester.email ?? '—'),

@@ -4,6 +4,7 @@ import { ConsoleLogger } from '@microsoft/teams.common';
 import { DevtoolsPlugin } from '@microsoft/teams.dev';
 
 import { buildTicketCard } from './cards';
+import { ofertaSR, ofertasSR, subcategoriaSR, subcategoriasSR } from './categorias';
 import { buildConfirmationSummary, isExplicitConfirmation } from './confirmation';
 import * as store from './conversation';
 import { createTicket } from './itsm';
@@ -92,6 +93,48 @@ app.on('message', async ({ activity, send, log }) => {
       store.append(conversationId, { role: 'assistant', content: result.respuesta });
       await send(result.respuesta);
       return;
+    }
+
+    // Una Solicitud debe llevar una oferta explícita. Si el servicio solo tiene
+    // una, la completamos; si tiene varias, el usuario debe escoger antes de
+    // llegar a la confirmación para evitar una plantilla predeterminada errónea.
+    if (result.ticket.tipo === 'solicitud') {
+      const disponibles = ofertasSR(result.ticket.servicio);
+      const seleccionada = ofertaSR(result.ticket.servicio, result.ticket.oferta);
+      if (seleccionada) {
+        result.ticket.oferta = seleccionada.nombre;
+      } else if (disponibles.length === 1) {
+        result.ticket.oferta = disponibles[0].nombre;
+      } else if (disponibles.length > 1) {
+        const opciones = disponibles.map((oferta) => `• ${oferta.nombre}`).join('\n');
+        const respuesta = result.ticket.oferta
+          ? `La oferta “${result.ticket.oferta}” no corresponde al servicio ` +
+            `“${result.ticket.servicio}”. Elige una de estas opciones:\n${opciones}`
+          : `Antes de preparar la solicitud, elige la oferta de servicio:\n${opciones}`;
+        store.append(conversationId, { role: 'assistant', content: respuesta });
+        await send(respuesta);
+        return;
+      }
+
+      const subcategorias = subcategoriasSR(result.ticket.servicio, result.ticket.categoria);
+      const subcategoria = subcategoriaSR(
+        result.ticket.servicio,
+        result.ticket.categoria,
+        result.ticket.subcategoria,
+      );
+      if (subcategoria) {
+        result.ticket.subcategoria = subcategoria;
+      } else if (subcategorias.length === 1) {
+        result.ticket.subcategoria = subcategorias[0];
+      } else if (subcategorias.length > 1) {
+        const opciones = subcategorias.map((item) => `• ${item}`).join('\n');
+        const respuesta = result.ticket.subcategoria
+          ? `La subcategoría “${result.ticket.subcategoria}” no es válida. Elige una:\n${opciones}`
+          : `Para completar los parámetros, elige la subcategoría:\n${opciones}`;
+        store.append(conversationId, { role: 'assistant', content: respuesta });
+        await send(respuesta);
+        return;
+      }
     }
 
     // Un borrador completo nunca se crea en este mismo turno. Primero se

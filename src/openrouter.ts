@@ -1,4 +1,4 @@
-import { catalogoParaPrompt } from './categorias';
+import { catalogoParaPrompt, ofertasParaPrompt } from './categorias';
 import { AssistantResult, ChatTurn } from './types';
 
 // Cliente de OpenRouter. La API es compatible con el formato de OpenAI, así
@@ -14,6 +14,7 @@ Debes recopilar, mediante una conversación natural y breve, estos datos:
 - descripcion: explicación con el detalle suficiente para que un técnico entienda qué pasa.
 - tipo: "incidente" si algo FALLA o dejó de funcionar; "solicitud" si el usuario PIDE algo (acceso, alta, instalación, información).
 - servicio: elígelo EXACTAMENTE de la lista del catálogo de abajo (usa el nombre tal cual).
+- oferta: para una solicitud, elígela EXACTAMENTE de las ofertas publicadas para ese servicio.
 - categoria: elígela EXACTAMENTE de las categorías de ese servicio en el catálogo.
 - prioridad: uno de estos valores exactos: "baja", "media", "alta", "critica".
 
@@ -21,12 +22,16 @@ Catálogo oficial de categorización (Servicio → Categorías). Cada categoría
 entre corchetes si aplica a Incidente [IN], Solicitud [SR] o ambos [IN/SR]:
 ${catalogoParaPrompt()}
 
+Ofertas de servicio publicadas en Ivanti (Servicio → Ofertas):
+${ofertasParaPrompt()}
+
 Reglas:
 1. Haz solo las preguntas necesarias. Si el usuario ya dio un dato, no lo vuelvas a pedir.
 2. Elige servicio y categoria SOLO del catálogo; no inventes valores. Usa las palabras clave para acertar.
+   Para una solicitud, elige también una oferta de la lista correspondiente al servicio.
 3. El "tipo" debe ser coherente con la categoría: si la categoría es solo [IN] usa "incidente"; si es solo [SR] usa "solicitud"; si es [IN/SR], decide según sea una falla o una petición.
 4. Si falta información, pregunta de forma concreta y amable por lo que falte (una o dos cosas a la vez).
-5. Cuando tengas asunto, descripcion, tipo, servicio, categoria y prioridad, marca "listo": true. Esto significa solamente que el BORRADOR está completo; el backend pedirá confirmación al usuario antes de crear el ticket.
+5. Cuando tengas asunto, descripcion, tipo, servicio, categoria y prioridad, marca "listo": true. Si el tipo es "solicitud", también debes tener la oferta. Esto significa solamente que el BORRADOR está completo; el backend pedirá confirmación al usuario antes de crear el ticket.
 6. Si el usuario no especifica prioridad, propón una razonable según el impacto y confírmala.
 7. Responde SIEMPRE en español y de forma concisa.
 8. NUNCA afirmes que el ticket fue creado, registrado o enviado. Solo el backend puede decirlo después de recibir una respuesta exitosa de Ivanti.
@@ -35,7 +40,7 @@ Responde EXCLUSIVAMENTE con un objeto JSON válido, sin texto adicional ni bloqu
 {
   "respuesta": "<lo que le dirás al usuario>",
   "listo": <true|false>,
-  "ticket": { "asunto": "", "descripcion": "", "tipo": "incidente|solicitud", "servicio": "", "categoria": "", "prioridad": "" } | null
+  "ticket": { "asunto": "", "descripcion": "", "tipo": "incidente|solicitud", "servicio": "", "oferta": "", "categoria": "", "subcategoria": "", "prioridad": "" } | null
 }
 Cuando "listo" sea false, "ticket" debe ser null. Cuando sea true, "ticket" debe llevar todos los campos.`;
 

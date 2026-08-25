@@ -37,6 +37,7 @@ export function buildConfirmationSummary(ticket: DraftTicket): string {
     `• Asunto: ${ticket.asunto}`,
     `• Descripción: ${ticket.descripcion}`,
     `• Servicio: ${ticket.servicio ?? '—'}`,
+    ...(ticket.tipo === 'solicitud' ? [`• Oferta: ${ticket.oferta ?? '—'}`] : []),
     `• Categoría: ${ticket.categoria ?? '—'}`,
     ...(ticket.subcategoria ? [`• Subcategoría: ${ticket.subcategoria}`] : []),
     `• Prioridad: ${ticket.prioridad ?? 'media'}`,
